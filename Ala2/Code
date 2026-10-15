@@ -1,1 +1,836 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Threat Lab | Harshil Verma</title>
+
+<style>
+:root {
+  --bg: #07111f;
+  --panel: #0d1b2d;
+  --line: #203953;
+  --text: #e8f1fb;
+  --muted: #93a9c2;
+  --cyan: #32d6e8;
+  --green: #54e39a;
+  --red: #ff617c;
+  --amber: #ffc857;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at top, #102744, var(--bg) 65%);
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.wrap {
+  max-width: 1180px;
+  margin: auto;
+  padding: 25px 18px 40px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo {
+  background: #0c2b42;
+  border: 1px solid #2d5a76;
+  border-radius: 14px;
+  padding: 12px;
+  font-size: 26px;
+}
+
+.eyebrow {
+  color: var(--cyan);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+h1 {
+  font-size: clamp(22px, 4vw, 34px);
+  margin: 5px 0 0;
+}
+
+.author {
+  border: 1px solid var(--line);
+  padding: 10px 15px;
+  border-radius: 25px;
+  color: var(--muted);
+}
+
+.author strong { color: white; }
+
+.hero {
+  background: linear-gradient(120deg, #0c263a, #0a1929);
+  border: 1px solid #1c4863;
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 20px;
+}
+
+.hero h2 { margin-top: 0; }
+
+.hero p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.safe {
+  display: inline-block;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: #79f0b4;
+  background: #0c302b;
+  border: 1px solid #246b57;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.threats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.threat {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  padding: 18px;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.threat:hover,
+.threat.active {
+  border-color: var(--cyan);
+  background: #123047;
+  transform: translateY(-2px);
+}
+
+.emoji { font-size: 27px; }
+
+.threat h3 { margin-bottom: 7px; }
+
+.threat p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 18px;
+}
+
+.panel {
+  min-width: 0;
+  background: linear-gradient(180deg, #0d1b2d, #0a1726);
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  padding: 19px;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 17px;
+}
+
+.panel h3 {
+  font-size: 14px;
+  margin: 0;
+}
+
+.sub {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 6px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.btn {
+  background: #102941;
+  color: var(--text);
+  border: 1px solid #31516e;
+  border-radius: 8px;
+  padding: 9px 11px;
+  cursor: pointer;
+}
+
+.btn:hover { border-color: var(--cyan); }
+
+.btn.primary {
+  background: #0d5364;
+  border-color: #16869a;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  background: #0b1928;
+  border: 1px solid #1b344d;
+  border-radius: 10px;
+  padding: 11px;
+}
+
+.stat span {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.stat strong {
+  display: block;
+  font-size: 21px;
+  margin-top: 8px;
+}
+
+.network {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+  padding: 12px;
+  background: #081421;
+  border: 1px solid #172e43;
+  border-radius: 12px;
+}
+
+.pc {
+  min-height: 80px;
+  background: #0e2335;
+  border: 1px solid #2b4a61;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: .25s;
+}
+
+.screen {
+  font-size: 24px;
+  color: #7c9db5;
+}
+
+.pc small {
+  font-size: 10px;
+  color: #9ab1c5;
+}
+
+.pc.infected {
+  background: #3a1a2a;
+  border-color: var(--red);
+}
+
+.pc.infected .screen { color: var(--red); }
+
+.pc.protected {
+  background: #103127;
+  border-color: var(--green);
+}
+
+.pc.protected .screen { color: var(--green); }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  color: var(--muted);
+  font-size: 11px;
+  margin: 12px 0 22px;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #7895aa;
+  margin-right: 4px;
+}
+
+.dot.red { background: var(--red); }
+.dot.green { background: var(--green); }
+
+.activity {
+  height: 225px;
+  overflow-y: auto;
+  background: #07131f;
+  border: 1px solid #1b344a;
+  border-radius: 10px;
+  padding: 12px;
+  font: 12px/1.7 Consolas, monospace;
+}
+
+.log {
+  padding: 5px 0;
+  border-bottom: 1px solid #12283b;
+  color: #b5c9da;
+}
+
+.time { color: #6487a2; }
+.log.alert { color: #ff8297; }
+.log.good { color: #7aeab2; }
+
+.info-block {
+  padding: 14px 0;
+  border-bottom: 1px solid #1a3045;
+}
+
+.info-block:last-child { border: none; }
+
+.info-block h4 {
+  color: var(--cyan);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+
+.info-block p,
+.info-block li {
+  color: #afc2d4;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.info-block p { margin: 0; }
+
+.info-block ul { padding-left: 18px; }
+
+footer {
+  text-align: center;
+  color: #7892aa;
+  font-size: 11px;
+  line-height: 1.8;
+  margin-top: 25px;
+}
+
+@media (max-width: 780px) {
+  .dashboard { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .threats { grid-template-columns: 1fr; }
+  .network { gap: 5px; padding: 7px; }
+  .pc { min-height: 65px; }
+  .wrap { padding: 16px 10px; }
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <div class="logo">⌘</div>
+    <div>
+      <div class="eyebrow">INTERACTIVE CYBERSECURITY PROJECT</div>
+      <h1>CYBER THREAT LAB</h1>
+    </div>
+  </div>
+  <div class="author">
+    Made by: <strong>Harshil Verma</strong>
+  </div>
+</header>
+
+<section class="hero">
+  <h2>Virus • Worm • Trojan Simulation</h2>
+  <p>
+    Explore simplified threat behavior in a fictional 12-computer lab.
+    Choose a scenario to view the simulation and security lessons.
+  </p>
+  <div class="safe">🛡 SAFE EDUCATIONAL SIMULATION — NO REAL MALWARE</div>
+</section>
+
+<section class="threats">
+  <button class="threat" data-threat="virus">
+    <span class="emoji">🦠</span>
+    <h3>VIRUS</h3>
+    <p>Host-file behavior simulation</p>
+  </button>
+
+  <button class="threat" data-threat="worm">
+    <span class="emoji">🪱</span>
+    <h3>WORM</h3>
+    <p>Fictional network-spread simulation</p>
+  </button>
+
+  <button class="threat" data-threat="trojan">
+    <span class="emoji">🐴</span>
+    <h3>TROJAN</h3>
+    <p>Disguised application demonstration</p>
+  </button>
+</section>
+
+<main class="dashboard">
+
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h3>🛡 CYBER THREAT SIMULATOR</h3>
+      <div class="sub" id="scenarioLabel">
+        Select a threat to start.
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="changeBtn">← Change threat</button>
+      <button class="btn primary" id="restartBtn">↻ Restart</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span>Threat</span>
+      <strong id="threatStat">—</strong>
+    </div>
+    <div class="stat">
+      <span>Simulated PCs</span>
+      <strong id="infectedStat">0</strong>
+    </div>
+    <div class="stat">
+      <span>Events</span>
+      <strong id="eventStat">0</strong>
+    </div>
+    <div class="stat">
+      <span>Status</span>
+      <strong id="statusStat" style="font-size:15px;color:var(--green)">READY</strong>
+    </div>
+  </div>
+
+  <div class="panel-head">
+    <div>
+      <h3>🖥️ 12 PC NETWORK</h3>
+      <div class="sub">Fictional devices — visual state only</div>
+    </div>
+    <div class="sub" id="networkStatus">Waiting…</div>
+  </div>
+
+  <div class="network" id="network"></div>
+
+  <div class="legend">
+    <span><i class="dot"></i> Normal PC</span>
+    <span><i class="dot red"></i> Simulated threat</span>
+    <span><i class="dot green"></i> Protected PC</span>
+  </div>
+
+  <div class="panel-head" style="margin-top:20px">
+    <h3>📡 LIVE SIMULATION ACTIVITY</h3>
+    <span class="sub">LOCAL DEMO LOG</span>
+  </div>
+
+  <div class="activity" id="activity" aria-live="polite">
+    <div class="log">Select a threat above to begin.</div>
+  </div>
+</section>
+
+<aside class="panel">
+  <div class="panel-head">
+    <div>
+      <h3>THREAT INTELLIGENCE</h3>
+      <div class="sub">Behavior • Impact • Prevention</div>
+    </div>
+  </div>
+
+  <div class="info-block">
+    <h4>Threat overview</h4>
+    <p id="overview">Choose Virus, Worm, or Trojan.</p>
+  </div>
+
+  <div class="info-block">
+    <h4>Properties</h4>
+    <p id="properties">Visual-only demonstration.</p>
+  </div>
+
+  <div class="info-block">
+    <h4>Working / flow</h4>
+    <p id="flow">The selected scenario will be described here.</p>
+  </div>
+
+  <div class="info-block">
+    <h4>Potential impact</h4>
+    <p id="impact">Threats may affect data, availability, or privacy.</p>
+  </div>
+
+  <div class="info-block">
+    <h4>Security solutions</h4>
+    <ul id="solutions">
+      <li>Keep systems updated.</li>
+      <li>Use trusted software sources.</li>
+      <li>Maintain backups.</li>
+    </ul>
+  </div>
+
+  <div class="info-block">
+    <h4>Safety note</h4>
+    <p>
+      This project uses fictional PCs and simulated events.
+      It does not access real files, networks, or processes.
+    </p>
+  </div>
+</aside>
+
+</main>
+
+<footer>
+  CYBER THREAT LAB · COLLEGE PROJECT<br>
+  Designed and developed by <strong>Harshil Verma</strong><br>
+  For cybersecurity awareness and education
+</footer>
+
+</div>
+
+<script>
+const network = document.getElementById("network");
+const activity = document.getElementById("activity");
+
+let selected = null;
+let events = 0;
+let affected = new Set();
+let timer = null;
+
+const details = {
+  virus: {
+    name: "VIRUS",
+    label: "Host-file simulation",
+    overview:
+      "A virus attaches to a host file or program and may spread when that host is used or shared.",
+    properties:
+      "This demo marks a fictional host and highlights related lab computers.",
+    flow:
+      "A fictional host is selected, the demo marks it as affected, and related nodes are highlighted.",
+    impact:
+      "A real virus may corrupt files, interrupt work, or cause data loss.",
+    solutions: [
+      "Use reputable, updated antivirus software.",
+      "Avoid unknown attachments and downloads.",
+      "Keep backups and install security updates."
+    ]
+  },
+
+  worm: {
+    name: "WORM",
+    label: "Network-spread simulation",
+    overview:
+      "A worm can spread between vulnerable systems without needing to attach to a host file.",
+    properties:
+      "The demo follows a fictional lab sequence. No network traffic is generated.",
+    flow:
+      "A fictional starting PC is selected, and other lab PCs are highlighted in sequence.",
+    impact:
+      "Rapid spread may consume resources, congest networks, and disrupt services.",
+    solutions: [
+      "Apply security patches promptly.",
+      "Use firewalls and network segmentation.",
+      "Monitor unusual activity."
+    ]
+  },
+
+  trojan: {
+    name: "TROJAN",
+    label: "Disguised-app simulation",
+    overview:
+      "A Trojan disguises itself as useful software to persuade someone to run it.",
+    properties:
+      "A fictional application is presented for inspection. Nothing is installed or executed.",
+    flow:
+      "The demo shows a fictional app name, flags it for inspection, and highlights a protected PC.",
+    impact:
+      "A real Trojan could enable data theft, unwanted access, or additional unwanted software.",
+    solutions: [
+      "Install apps from trusted sources.",
+      "Verify the publisher and requested permissions.",
+      "Avoid suspicious links and unexpected files."
+    ]
+  }
+};
+
+function createPCs() {
+  network.innerHTML = "";
+
+  for (let i = 1; i <= 12; i++) {
+    const pc = document.createElement("div");
+    pc.className = "pc";
+    pc.id = "pc" + i;
+
+    pc.innerHTML =
+      '<span class="screen">▣</span>' +
+      '<small>LAB-PC-' + String(i).padStart(2, "0") + '</small>';
+
+    network.appendChild(pc);
+  }
+}
+
+function log(message, type = "") {
+  const line = document.createElement("div");
+  line.className = "log " + type;
+
+  const now = new Date().toLocaleTimeString();
+
+  const timestamp = document.createElement("span");
+  timestamp.className = "time";
+  timestamp.textContent = "[" + now + "] ";
+
+  line.appendChild(timestamp);
+  line.appendChild(document.createTextNode(message));
+  activity.appendChild(line);
+
+  activity.scrollTop = activity.scrollHeight;
+
+  events++;
+  document.getElementById("eventStat").textContent = events;
+}
+
+function markPC(number, type = "infected") {
+  const pc = document.getElementById("pc" + number);
+  if (!pc) return;
+
+  pc.classList.add(type);
+
+  if (type === "infected") {
+    affected.add(number);
+  }
+
+  document.getElementById("infectedStat").textContent =
+    affected.size;
+}
+
+function setInfo(key) {
+  const d = key ? details[key] : null;
+
+  document.getElementById("overview").textContent =
+    d ? d.overview : "Choose Virus, Worm, or Trojan.";
+
+  document.getElementById("properties").textContent =
+    d ? d.properties : "Visual-only demonstration.";
+
+  document.getElementById("flow").textContent =
+    d ? d.flow : "The selected scenario will be described here.";
+
+  document.getElementById("impact").textContent =
+    d ? d.impact : "Threats may affect data, availability, or privacy.";
+
+  const list = document.getElementById("solutions");
+  list.replaceChildren();
+
+  const solutions = d ? d.solutions : [
+    "Keep systems updated.",
+    "Use trusted software sources.",
+    "Maintain backups."
+  ];
+
+  solutions.forEach(text => {
+    const item = document.createElement("li");
+    item.textContent = text;
+    list.appendChild(item);
+  });
+}
+
+function reset(clearThreat = false) {
+  if (timer) {
+    clearInterval(timer);
+    clearTimeout(timer);
+    timer = null;
+  }
+
+  affected.clear();
+  events = 0;
+
+  document.getElementById("infectedStat").textContent = "0";
+  document.getElementById("eventStat").textContent = "0";
+
+  const status = document.getElementById("statusStat");
+  status.textContent = "READY";
+  status.style.color = "var(--green)";
+
+  document.getElementById("networkStatus").textContent =
+    "Waiting for scenario…";
+
+  createPCs();
+
+  activity.replaceChildren();
+
+  if (clearThreat) {
+    selected = null;
+
+    document.getElementById("threatStat").textContent = "—";
+    document.getElementById("scenarioLabel").textContent =
+      "Select a threat to start.";
+
+    document.querySelectorAll(".threat").forEach(button => {
+      button.classList.remove("active");
+    });
+
+    setInfo(null);
+  }
+
+  log("Simulation reset. Ready for a scenario.");
+}
+
+function finish() {
+  document.getElementById("statusStat").textContent = "COMPLETE";
+  document.getElementById("statusStat").style.color = "var(--green)";
+  document.getElementById("networkStatus").textContent = "Scenario complete";
+
+  log("Scenario complete. No real system changes were made.", "good");
+  timer = null;
+}
+
+function runVirus() {
+  log("Checking fictional host file: notes-demo.txt.");
+
+  const sequence = [1, 2, 5, 6];
+  let index = 0;
+
+  timer = setInterval(() => {
+    if (index >= sequence.length) {
+      clearInterval(timer);
+      finish();
+      return;
+    }
+
+    const pc = sequence[index];
+    markPC(pc);
+
+    log(
+      "SIMULATION ONLY: host-related event at LAB-PC-" +
+      String(pc).padStart(2, "0"),
+      "alert"
+    );
+
+    index++;
+  }, 650);
+}
+
+function runWorm() {
+  log("Starting at fictional LAB-PC-01.");
+
+  const sequence = [1, 2, 3, 6, 5, 4, 7, 8, 9, 10, 11, 12];
+  let index = 0;
+
+  timer = setInterval(() => {
+    if (index >= sequence.length) {
+      clearInterval(timer);
+      finish();
+      return;
+    }
+
+    const pc = sequence[index];
+    markPC(pc);
+
+    log(
+      "SIMULATION ONLY: hypothetical spread to LAB-PC-" +
+      String(pc).padStart(2, "0"),
+      "alert"
+    );
+
+    index++;
+  }, 430);
+}
+
+function runTrojan() {
+  log("Fictional app displayed: FreeGameDemo.");
+  log("A legitimate-looking app could hide unwanted behavior.", "alert");
+
+  timer = setTimeout(() => {
+    markPC(8, "protected");
+    log("Defensive action: LAB-PC-08 flagged for inspection.", "good");
+    finish();
+  }, 1000);
+}
+
+function chooseThreat(key) {
+  reset(false);
+
+  selected = key;
+
+  document.querySelectorAll(".threat").forEach(button => {
+    button.classList.toggle("active", button.dataset.threat === key);
+  });
+
+  const data = details[key];
+
+  document.getElementById("threatStat").textContent = data.name;
+  document.getElementById("scenarioLabel").textContent = data.label;
+  document.getElementById("networkStatus").textContent = "Simulation running";
+
+  const status = document.getElementById("statusStat");
+  status.textContent = "RUNNING";
+  status.style.color = "var(--amber)";
+
+  setInfo(key);
+  activity.replaceChildren();
+
+  log("Started " + data.name + " educational simulation.", "good");
+  log("Safety mode active: fictional lab only.");
+
+  if (key === "virus") runVirus();
+  if (key === "worm") runWorm();
+  if (key === "trojan") runTrojan();
+}
+
+document.querySelectorAll(".threat").forEach(button => {
+  button.addEventListener("click", () => {
+    chooseThreat(button.dataset.threat);
+  });
+});
+
+document.getElementById("restartBtn").addEventListener("click", () => {
+  if (selected) {
+    chooseThreat(selected);
+  } else {
+    reset(true);
+  }
+});
+
+document.getElementById("changeBtn").addEventListener("click", () => {
+  reset(true);
+});
+
+createPCs();
+</script>
+</body>
+</html>
+
